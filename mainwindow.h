@@ -2,9 +2,16 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+
 #include <QTimer>
 #include <QDateTime>
-#include <QDebug>
+
+#include <QKeyEvent>
+
+#include <QtMultimedia/QMediaPlayer>
+#include <QMediaPlaylist>
+#include <QSound>
+
 
 namespace Ui {
 class MainWindow;
@@ -27,8 +34,10 @@ private slots:
     void on_startButton_clicked();
     void on_startButton_toggled(bool checked);
     void on_close_clicked();
-
     void on_stopButton_clicked();
+    void resetTimerHelper();
+
+    void keyPressEvent(QKeyEvent *event);
 
 private:
     Ui::MainWindow *ui;

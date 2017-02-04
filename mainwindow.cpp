@@ -21,6 +21,13 @@ void MainWindow::showTime()
     if (nowTime.toString() == "00:00:00")
     {
         nextTime = QTime(0, 0, 0);
+
+        // if time is out then play music to notice
+        if (!starter)
+        {
+            resetTimerHelper();
+            // QSound::play("/home/ryu/music.mp3");
+        }
     }
     ui->DigitalClock->setText(nextTime.toString("hh : mm : ss"));
 }
@@ -91,6 +98,11 @@ void MainWindow::on_close_clicked()
 
 void MainWindow::on_stopButton_clicked()
 {
+    resetTimerHelper();
+}
+
+void MainWindow::resetTimerHelper()
+{
     ui->limitHour->setText("00");
     ui->limitHour->setReadOnly(false);
 
@@ -105,6 +117,19 @@ void MainWindow::on_stopButton_clicked()
     ui->DigitalClock->setText("00 : 00 : 00");
 
     starter = true;
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    switch (event->key())
+    {
+    // 0x20
+    case Qt::Key_Space:
+        ui->startButton->toggle();
+    // 0x01000000
+    case Qt::Key_Escape:
+        this->close();
+    }
 }
 
 MainWindow::~MainWindow()
